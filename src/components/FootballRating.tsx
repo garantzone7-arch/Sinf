@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
-import { ArrowUpDown, Star, Zap, Shield, Footprints, Crosshair, Circle, Plus, X, Pencil, Trash2, Upload, ImageOff } from 'lucide-react';
+import { ArrowUpDown, Star, Zap, Shield, Footprints, Crosshair, Circle, Plus, X, Pencil, Trash2, Upload, ImageOff, Search } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import type { Player } from '@/lib/supabase';
 
@@ -55,6 +55,7 @@ export default function FootballRating() {
   const [players, setPlayers] = useState<Player[]>([]);
   const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState<SortKey>('rating');
+  const [query, setQuery] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState(emptyForm);
@@ -73,13 +74,15 @@ export default function FootballRating() {
   }
 
   const sorted = useMemo(() => {
-    const arr = [...players];
+    const arr = players.filter((player) =>
+      `${player.name} ${player.position}`.toLowerCase().includes(query.toLowerCase().trim())
+    );
     arr.sort((a, b) => {
       if (sortBy === 'rating') return b.rating - a.rating;
       return b[sortBy] - a[sortBy];
     });
     return arr;
-  }, [players, sortBy]);
+  }, [players, sortBy, query]);
 
   async function uploadImage(file: File) {
     setUploading(true);
@@ -173,6 +176,16 @@ export default function FootballRating() {
             </button>
           ))}
         </div>
+        <label className="relative block w-full max-w-md">
+          <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-cyan-300" />
+          <input
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="O‘quvchi yoki pozitsiyani qidiring..."
+            aria-label="O‘yinchi qidirish"
+            className="w-full rounded-xl border border-white/10 bg-white/5 py-3 pl-10 pr-4 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-300/50 focus:bg-white/[.08]"
+          />
+        </label>
         <button
           onClick={() => { setForm(emptyForm); setEditingId(null); setShowModal(true); }}
           className="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-semibold shadow-lg shadow-emerald-500/25 hover:scale-105 transition-all"
