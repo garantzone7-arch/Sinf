@@ -49,7 +49,7 @@ export default function Home({ setPage }: HomeProps) {
               <button onClick={() => setPage('reyting')} className="group flex items-center justify-center gap-3 rounded-xl bg-cyan-300 px-5 py-3.5 font-bold text-slate-950 shadow-[0_0_35px_rgba(103,232,249,.25)] transition hover:-translate-y-0.5 hover:bg-cyan-200">
                 <Trophy className="size-5" /> Reytingni ko‘rish <ArrowRight className="size-4 transition group-hover:translate-x-1" />
               </button>
-              <a href="https://t.me/+aTTiYbTAxn9hMDIy" target="_blank" rel="noreferrer" className="flex items-center justify-center gap-3 rounded-xl border border-white/15 bg-white/5 px-5 py-3.5 font-bold text-white transition hover:border-cyan-300/50 hover:bg-white/10">
+              <a href="https://t.me/+aTTiYbTAxn9hMDIy" target="_blank" rel="noopener noreferrer" aria-label="Sinf chatiga yangi oynada qo‘shilish" className="flex items-center justify-center gap-3 rounded-xl border border-white/15 bg-white/5 px-5 py-3.5 font-bold text-white transition hover:border-cyan-300/50 hover:bg-white/10">
                 <MessageCircle className="size-5 text-cyan-300" /> Sinf chatiga qo‘shilish
               </a>
             </div>
